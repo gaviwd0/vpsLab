@@ -13,18 +13,19 @@ export async function modelGetPrueba(id){
 
 // Crear una prueba
 export async function modelCreatePrueba(nombre,apellido){
-    const result = await db.query('INSERT INTO prueba (nombre,apellido) VALUES (?,?)', [nombre,apellido])
-    return {idprueba:result.insertId,nombre,apellido}
+    const [result] = await db.query('INSERT INTO prueba (nombre,apellido) VALUES (?,?)', [nombre,apellido])
+    return modelGetPrueba(result.insertId)
 }
 
 // Actualizar una prueba
 export async function modelUpdatePrueba(id,nombre,apellido){
-    const result = await db.query('UPDATE prueba SET nombre = ?, apellido = ? WHERE idprueba = ?', [nombre,apellido,id])
-    return {insersiones:result.affectedRows,idprueba:id,nombre,apellido}
+    const [result] = await db.query('UPDATE prueba SET nombre = ?, apellido = ? WHERE idprueba = ?', [nombre,apellido,id])
+    if (result.affectedRows === 0) return null
+    return modelGetPrueba(id)
 }
 
 // Eliminar una prueba
 export async function modelDeletePrueba(id){
-    const result = await db.query('DELETE FROM prueba WHERE idprueba = ?', [id])
-    return {affectedRows:result.affectedRows, idprueba:id}
+    const [result] = await db.query('DELETE FROM prueba WHERE idprueba = ?', [id])
+    return result.affectedRows
 }
