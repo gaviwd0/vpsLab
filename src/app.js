@@ -14,7 +14,7 @@ app.use(cors())
 
 
 //rutas
-app.use('/test/', pruebaRouter)
+app.use('/test', pruebaRouter)
 
 
 export default app
