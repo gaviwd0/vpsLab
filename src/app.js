@@ -3,7 +3,8 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { marked } from 'marked'
 // Import de routers
-import pruebaRouter from './routes/test.routes.js'
+import pruebaRouter from './routes/test.routes.js';
+import iraniRouter from './routes/irani.js';
 
 
 //configuracion de app
@@ -11,6 +12,7 @@ const app = express()
 app.use(express.json()) 
 app.use(cookieParser())
 app.use(cors())
+app.use(express.static('image')); // Servir archivos estáticos desde la carpeta 'image'
 
 
 // Documentación en la ruta raíz
@@ -122,7 +124,7 @@ app.get('/', (req, res) => {
 });
 
 //rutas
-app.use('/test', pruebaRouter)
-
+app.use('/test', pruebaRouter);
+app.use('/irani', iraniRouter);
 
 export default app
